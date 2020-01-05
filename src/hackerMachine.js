@@ -6,12 +6,6 @@ const loading = '@state/LOADING';
 const success = '@state/SUCCESS';
 const error = '@state/ERROR';
 
-const url = 'https://api.hnpwa.com/v0/news/1.json';
-function fetchArticlesList() {
-  return fetch(url).then(res => res.json());
-}
-const actions = fetchArticlesList;
-
 export const hackerMachine = Machine({
   id: 'hacker-machine',
   initial: idle,
@@ -27,7 +21,7 @@ export const hackerMachine = Machine({
     [loading]: {
       invoke: {
         id: 'fetch-articles-list',
-        src: fetchArticlesList,
+        src: 'fetchArticlesList',
         onDone: {
           target: success,
           actions: assign({ posts: (_, event) => event.data })

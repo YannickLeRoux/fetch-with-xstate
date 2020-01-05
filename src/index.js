@@ -4,8 +4,15 @@ import { useMachine } from '@xstate/react';
 import { hackerMachine } from './hackerMachine';
 import './styles.css';
 
+const url = 'https://api.hnpwa.com/v0/news/1.json';
+function fetchArticlesList() {
+  return fetch(url).then(res => res.json());
+}
+
 function App() {
-  const [current, send] = useMachine(hackerMachine);
+  const [current, send] = useMachine(hackerMachine, {
+    services: { fetchArticlesList }
+  });
   console.log(current.context);
   return (
     <div className="App">
